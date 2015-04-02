@@ -4,11 +4,9 @@
 
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name="org.fusesource.restygwt.RestyGWT"/>
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='client.Index'/>
-
-    <!-- Specify the app servlets.                   -->
-    <servlet path='/tm/' class='server.IndexServiceImpl'/>
 
 </module>
