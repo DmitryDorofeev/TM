@@ -14,7 +14,7 @@ public class Index implements EntryPoint {
      * This is the entry point method.
      */
     public void onModuleLoad() {
-        Defaults.setServiceRoot(GWT.getHostPageBaseURL());
+        Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "api");
         RootPanel.get("container").add(new LoginWidget());
     }
 

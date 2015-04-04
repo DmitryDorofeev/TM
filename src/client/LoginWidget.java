@@ -15,12 +15,18 @@ import org.fusesource.restygwt.client.MethodCallback;
  */
 public class LoginWidget extends Composite {
 
-    @UiField TextBox loginField;
-    @UiField PasswordTextBox passwordField;
-    @UiField Button loginButton;
-    @UiField Label error;
+    @UiField
+    TextBox loginField;
+    @UiField
+    PasswordTextBox passwordField;
+    @UiField
+    Button loginButton;
+    @UiField
+    Label error;
 
-    interface LoginUiBinder extends UiBinder<Widget, LoginWidget> {}
+    interface LoginUiBinder extends UiBinder<Widget, LoginWidget> {
+    }
+
     private static LoginUiBinder uiBinder = GWT.create(LoginUiBinder.class);
 
     protected String username;
@@ -38,8 +44,8 @@ public class LoginWidget extends Composite {
     }
 
     public void login() {
-        LoginService loginService = GWT.create(LoginService.class);
-        loginService.login(new MethodCallback<String>() {
+        UserService userService = GWT.create(UserService.class);
+        userService.login(new MethodCallback<String>() {
             public void onFailure(Method method, Throwable throwable) {
                 Window.alert("Fail");
             }
