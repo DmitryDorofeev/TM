@@ -8,5 +8,7 @@
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='client.Index'/>
+    <source path='shared'/>
+    <source path='client'/>
 
 </module>

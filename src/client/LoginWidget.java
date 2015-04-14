@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
+import shared.User;
 
 /**
  * Created by dmitry on 02.04.15.
@@ -45,13 +46,13 @@ public class LoginWidget extends Composite {
 
     public void login() {
         UserService userService = GWT.create(UserService.class);
-        userService.login(new MethodCallback<String>() {
+        userService.login(new MethodCallback<User>() {
             public void onFailure(Method method, Throwable throwable) {
-                Window.alert("Fail");
+                Window.alert("Fail"+throwable.getMessage());
             }
 
-            public void onSuccess(Method method, String label) {
-                Window.alert(label);
+            public void onSuccess(Method method, User user) {
+                Window.alert(user.login);
             }
         });
     }
