@@ -1,4 +1,8 @@
-/** Add css rules here for your application. */
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
 h1 {
     font-size: 2em;
@@ -10,11 +14,78 @@ body, td, a, div, .p {
     font-family: arial, sans-serif
 }
 
+.container {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
 .gwt-Button {
     border: none;
-    background-color: #123456;
+    background-color: #2980b9;
     padding: 10px 20px;
     color: #fff;
-    font-family: Verdana;
+    font-family: Arial;
     font-size: 18px;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+}
+
+div.show {
+    display: block;
+    animation: show .6s;
+    -webkit-animation: show .6s;
+    opacity: 1;
+}
+
+div.hide {
+    display: block;
+    animation: hide .6s;
+    -webkit-animation: hide .6s;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        top: 0;
+    }
+    100% {
+        opacity: 1;
+        top: 20px;
+    }
+}
+
+@-webkit-keyframes show {
+    0% {
+        opacity: 0;
+        top: 0;
+    }
+    100% {
+        opacity: 1;
+        top: 20px;
+    }
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+        top: 20px;
+    }
+    100% {
+        opacity: 0;
+        top: 0px;
+    }
+}
+
+@-webkit-keyframes hide {
+    0% {
+        opacity: 1;
+        top: 20px;
+    }
+    100% {
+        opacity: 0;
+        top: 0px;
+    }
 }

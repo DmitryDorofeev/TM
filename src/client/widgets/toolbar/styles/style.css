@@ -1,0 +1,13 @@
+.messagebox {
+    display: none;
+    width: 300px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    margin-left: -150px;
+    text-align: center;
+    background-color: rgba(20, 20, 20, .7);
+    padding: 20px 0;
+    color: #ffffff;
+    border-radius: 2px;
+}

@@ -1,10 +1,13 @@
-<!-- HelloWidgetWorld.ui.xml -->
-
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style src="styles/style.css"/>
     <g:HTMLPanel>
         <div class="{style.panel}">
+            <div class="{style.panel__row}">
+                <div class="{style.panel__title}">
+                    Войти/Зарегистрироваться
+                </div>
+            </div>
             <div class="{style.panel__row}">
                 <g:Label ui:field="error"></g:Label>
             </div>
@@ -16,8 +19,8 @@
             </div>
             <div class="{style.panel__row}">
                 <g:Button ui:field="loginButton">Войти</g:Button>
+                <g:Button ui:field="signupButton">Зарегистрироваться</g:Button>
             </div>
         </div>
     </g:HTMLPanel>
-
 </ui:UiBinder>

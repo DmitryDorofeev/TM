@@ -1,5 +1,7 @@
 package client;
 
+import client.widgets.app.AppWidget;
+import client.widgets.login.LoginWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
@@ -15,7 +17,7 @@ public class Index implements EntryPoint {
      */
     public void onModuleLoad() {
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "api");
-        RootPanel.get("container").add(new LoginWidget());
+        RootPanel.get("container").add(new AppWidget());
     }
 
 }

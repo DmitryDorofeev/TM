@@ -1,7 +1,6 @@
 package shared;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 
@@ -10,11 +9,23 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable {
-    public String login;
+    @JsonProperty("email")
+    public String email;
+    @JsonIgnore
+    public String hashedPassword;
+    @JsonIgnore
+    public String salt;
 
     @JsonCreator
-    public User(@JsonProperty("login") String login) {
-        this.login = login;
+    public User(String email) {
+        this.email = email;
+    }
+
+    @JsonCreator
+    public User(String email, String hashedPassword, String salt) {
+        this.email = email;
+        this.hashedPassword = hashedPassword;
+        this.salt = salt;
     }
 
     public User() {
