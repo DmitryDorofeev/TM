@@ -1,6 +1,5 @@
 package shared;
 
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Response {
     public int status;
-    public Object data;
+    public User data;
 
     @JsonCreator
-    public Response(@JsonProperty("status") int status, @JsonProperty("data") Object data) {
+    public Response(@JsonProperty("status") int status, @JsonProperty("data") User data) {
         this.status = status;
         this.data = data;
     }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable {
-    @JsonProperty("email")
+
     public String email;
     @JsonIgnore
     public String hashedPassword;
@@ -17,14 +17,15 @@ public class User implements Serializable {
     public String salt;
 
     @JsonCreator
-    public User(String email) {
+    public User(@JsonProperty("email") String email) {
         this.email = email;
     }
 
-    @JsonCreator
-    public User(String email, String hashedPassword, String salt) {
-        this.email = email;
+    public void setPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    public void setSalt(String salt) {
         this.salt = salt;
     }
 

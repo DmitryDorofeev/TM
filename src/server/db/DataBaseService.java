@@ -97,6 +97,9 @@ public class DataBaseService {
         st.setString(1, email);
         ResultSet rs = st.executeQuery();
         rs.next();
-        return new User(email, rs.getString("password"), rs.getString("salt"));
+        User user = new User(email);
+        user.setPassword(rs.getString("password"));
+        user.setSalt(rs.getString("salt"));
+        return user;
     }
 }

@@ -4,23 +4,40 @@
     <g:HTMLPanel>
         <div class="{style.panel}">
             <div class="{style.panel__row}">
-                <div class="{style.panel__title}">
-                    Войти/Зарегистрироваться
-                </div>
-            </div>
-            <div class="{style.panel__row}">
                 <g:Label ui:field="error"></g:Label>
             </div>
-            <div class="{style.panel__row}">
-                <g:TextBox ui:field="loginField"></g:TextBox>
-            </div>
-            <div class="{style.panel__row}">
-                <g:PasswordTextBox ui:field="passwordField"></g:PasswordTextBox>
-            </div>
-            <div class="{style.panel__row}">
-                <g:Button ui:field="loginButton">Войти</g:Button>
-                <g:Button ui:field="signupButton">Зарегистрироваться</g:Button>
-            </div>
+            <g:HTMLPanel ui:field="loginPanel">
+                <div class="{style.panel__row}">
+                    <div class="{style.panel__title}">
+                        Войти
+                    </div>
+                </div>
+                <div class="{style.panel__row}">
+                    <g:TextBox ui:field="loginEmailField"></g:TextBox>
+                </div>
+                <div class="{style.panel__row}">
+                    <g:PasswordTextBox ui:field="loginPasswordField"></g:PasswordTextBox>
+                </div>
+                <div class="{style.panel__row}">
+                    <g:Button ui:field="loginButton">Войти</g:Button>
+                </div>
+            </g:HTMLPanel>
+            <g:HTMLPanel ui:field="signupPanel">
+                <div class="{style.panel__row}">
+                    <div class="{style.panel__title}">
+                        Зарегистрироваться
+                    </div>
+                </div>
+                <div class="{style.panel__row}">
+                    <g:TextBox ui:field="signupEmailField"></g:TextBox>
+                </div>
+                <div class="{style.panel__row}">
+                    <g:PasswordTextBox ui:field="signupPasswordField"></g:PasswordTextBox>
+                </div>
+                <div class="{style.panel__row}">
+                    <g:Button ui:field="signupButton">Зарегистрироваться</g:Button>
+                </div>
+            </g:HTMLPanel>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

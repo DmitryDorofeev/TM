@@ -1,10 +1,13 @@
 package client.widgets.app;
 
 import client.UserService;
+import client.events.LoginEvent;
+import client.events.LoginEventHandler;
 import client.widgets.login.LoginWidget;
 import client.widgets.toolbar.ToolbarWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
@@ -34,26 +37,35 @@ public class AppWidget extends Composite {
 
     private static AppUiBinder uiBinder = GWT.create(AppUiBinder.class);
 
-    public AppWidget() {
+    public AppWidget(final SimpleEventBus eventBus) {
         initWidget(uiBinder.createAndBindUi(this));
         UserService userService = GWT.create(UserService.class);
+
         userService.getUser(new MethodCallback<Response>() {
             public void onFailure(Method method, Throwable throwable) {
                 container.clear();
-                container.add(new LoginWidget());
+                container.add(new LoginWidget(eventBus));
                 showMessage(throwable.getMessage());
             }
 
             public void onSuccess(Method method, Response resp) {
                 container.clear();
                 if (resp.status == 200) {
-                    container.add(new ToolbarWidget());
+                    container.add(new ToolbarWidget(eventBus, resp.data));
                 }
                 else {
-                    container.add(new LoginWidget());
+                    container.add(new LoginWidget(eventBus));
                 }
             }
         });
+
+        eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
+            public void showApp(LoginEvent event) {
+                container.clear();
+                container.add(new ToolbarWidget(eventBus, event.getUser()));
+            }
+        });
+
     }
 
     public void showMessage(String msg) {

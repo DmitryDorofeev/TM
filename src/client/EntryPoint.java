@@ -1,23 +1,25 @@
 package client;
 
 import client.widgets.app.AppWidget;
-import client.widgets.login.LoginWidget;
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Defaults;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
  */
-public class Index implements EntryPoint {
+public class EntryPoint implements com.google.gwt.core.client.EntryPoint {
 
     /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
         Defaults.setServiceRoot(GWT.getHostPageBaseURL() + "api");
-        RootPanel.get("container").add(new AppWidget());
+
+        SimpleEventBus eventBus = new SimpleEventBus();
+
+        RootPanel.get("container").add(new AppWidget(eventBus));
     }
 
 }

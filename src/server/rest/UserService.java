@@ -55,10 +55,10 @@ public class UserService {
     public Response signup(@FormParam("email") String email, @FormParam("password") String password, @Context HttpServletRequest req) {
         try {
             DataBaseService.getInstance().addUser(email, password);
-            return new Response(200, "OK");
+            return new Response(200, null);
         }
         catch (Exception e) {
-            return new Response(500, e.getMessage());
+            return new Response(500, null);
         }
     }
 

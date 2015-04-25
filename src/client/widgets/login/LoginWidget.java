@@ -1,9 +1,11 @@
 package client.widgets.login;
 
 import client.UserService;
+import client.events.LoginEvent;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.logging.client.ConsoleLogHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -23,9 +25,13 @@ import java.util.logging.Logger;
 public class LoginWidget extends Composite {
 
     @UiField
-    TextBox loginField;
+    TextBox loginEmailField;
     @UiField
-    PasswordTextBox passwordField;
+    PasswordTextBox loginPasswordField;
+    @UiField
+    TextBox signupEmailField;
+    @UiField
+    PasswordTextBox signupPasswordField;
     @UiField
     Button loginButton;
     @UiField
@@ -37,19 +43,21 @@ public class LoginWidget extends Composite {
     }
 
     private static LoginUiBinder uiBinder = GWT.create(LoginUiBinder.class);
+    private final SimpleEventBus eventBus;
 
-    public LoginWidget() {
+    public LoginWidget(final SimpleEventBus eventBus) {
+        this.eventBus = eventBus;
         initWidget(uiBinder.createAndBindUi(this));
-        loginField.getElement().setAttribute("placeholder", "email");
-        passwordField.getElement().setAttribute("placeholder", "password");
+        loginEmailField.getElement().setAttribute("placeholder", "email");
+        loginPasswordField.getElement().setAttribute("placeholder", "password");
         loginButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                LoginWidget.this.login(loginField.getText(), passwordField.getText());
+                LoginWidget.this.login(loginEmailField.getText(), loginPasswordField.getText());
             }
         });
         signupButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                LoginWidget.this.signup(loginField.getText(), passwordField.getText());
+                LoginWidget.this.signup(loginEmailField.getText(), loginPasswordField.getText());
             }
         });
     }
@@ -62,13 +70,11 @@ public class LoginWidget extends Composite {
             }
 
             public void onSuccess(Method method, Response resp) {
-                Window.alert("OK");
                 if (resp.status == 200) {
-                    Window.alert("OKK");
-                    User user = (User) resp.data;
-                    Window.alert(user.email);
+                    User user = resp.data;
+                    eventBus.fireEvent(new LoginEvent(user));
                 } else {
-                    Window.alert("not ok");
+                    error.setText("Неправильный логин/пароль");
                 }
             }
         });

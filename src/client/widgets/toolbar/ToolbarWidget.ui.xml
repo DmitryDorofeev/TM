@@ -2,7 +2,11 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style src="styles/style.css"/>
     <g:HTMLPanel>
-        <div>sasay</div>
+        <div class="{style.toolbar}">
+            <div class="{style.login}">
+                <g:Label ui:field="email"></g:Label>
+            </div>
+        </div>
     </g:HTMLPanel>
 
 </ui:UiBinder>
