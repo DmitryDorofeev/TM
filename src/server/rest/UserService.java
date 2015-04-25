@@ -25,7 +25,9 @@ public class UserService {
         if (email != null) {
             try {
                 User user = DataBaseService.getInstance().getUser(email);
-                return new Response(200, user);
+                if (user.hashedPassword.equals(DataBaseService.getInstance().encode(password, user.salt))) {
+                    return new Response(200, user);
+                }
             } catch (Exception e) {
 
             }

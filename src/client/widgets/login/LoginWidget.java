@@ -57,7 +57,7 @@ public class LoginWidget extends Composite {
         });
         signupButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                LoginWidget.this.signup(loginEmailField.getText(), loginPasswordField.getText());
+                LoginWidget.this.signup(signupEmailField.getText(), signupPasswordField.getText());
             }
         });
     }
