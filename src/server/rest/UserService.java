@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +20,13 @@ public class UserService {
 
     @POST
     @Path("login/")
-    public Response login(@FormParam("email") String email, @FormParam("password") String password) {
+    public Response login(@Context HttpServletRequest req, @FormParam("email") String email, @FormParam("password") String password) {
         if (email != null) {
+            HttpSession session = req.getSession(true);
             try {
                 User user = DataBaseService.getInstance().getUser(email);
                 if (user.hashedPassword.equals(DataBaseService.getInstance().encode(password, user.salt))) {
+                    session.setAttribute("user", user);
                     return new Response(200, user);
                 }
             } catch (Exception e) {
@@ -40,7 +41,7 @@ public class UserService {
     public Response getUser(@Context HttpServletRequest req) {
         String email;
         HttpSession session = req.getSession(true);
-        email = sessions.get(session.getId());
+        email = ((User) session.getAttribute("user")).email;
         if (email != null) {
             try {
                 User user = DataBaseService.getInstance().getUser(email);

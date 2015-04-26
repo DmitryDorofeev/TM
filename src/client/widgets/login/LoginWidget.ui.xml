@@ -6,7 +6,7 @@
             <div class="{style.panel__row}">
                 <g:Label ui:field="error"></g:Label>
             </div>
-            <g:HTMLPanel ui:field="loginPanel">
+            <g:HTMLPanel ui:field="loginPanel" styleName="{style.subpanel}">
                 <div class="{style.panel__row}">
                     <div class="{style.panel__title}">
                         Войти
@@ -22,7 +22,7 @@
                     <g:Button ui:field="loginButton">Войти</g:Button>
                 </div>
             </g:HTMLPanel>
-            <g:HTMLPanel ui:field="signupPanel">
+            <g:HTMLPanel ui:field="signupPanel" styleName="{style.subpanel}">
                 <div class="{style.panel__row}">
                     <div class="{style.panel__title}">
                         Зарегистрироваться
