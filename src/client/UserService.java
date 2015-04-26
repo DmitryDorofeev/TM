@@ -24,4 +24,8 @@ public interface UserService extends RestService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     void signip(@FormParam("email") String email, @FormParam("password") String password, MethodCallback<Response> callback);
 
+    @POST
+    @Path("logout/")
+    void logout(MethodCallback<Response> callback);
+
 }

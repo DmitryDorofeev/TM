@@ -3,8 +3,16 @@
     <ui:style src="styles/style.css"/>
     <g:HTMLPanel>
         <div class="{style.toolbar}">
-            <div class="{style.login}">
-                <g:Label ui:field="email"></g:Label>
+            <div class="{style.toolbar__left}">
+                <div class="{style.title}">Title</div>
+            </div>
+            <div class="{style.toolbar__right}">
+                <g:SimplePanel styleName="{style.login}" ui:field="emailField">
+                    <g:Label ui:field="email"></g:Label>
+                </g:SimplePanel>
+                <div class="{style.useractions}" ui:field="userActionsList">
+                    <g:HTMLPanel ui:field="logout"><div class="{style.useractions__action}">Выйти</div></g:HTMLPanel>
+                </div>
             </div>
         </div>
     </g:HTMLPanel>

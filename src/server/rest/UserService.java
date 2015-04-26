@@ -39,12 +39,11 @@ public class UserService {
     @GET
     @Path("login/")
     public Response getUser(@Context HttpServletRequest req) {
-        String email;
         HttpSession session = req.getSession(true);
-        email = ((User) session.getAttribute("user")).email;
-        if (email != null) {
+        User storedUser = (User) session.getAttribute("user");
+        if (storedUser != null && storedUser.email != null) {
             try {
-                User user = DataBaseService.getInstance().getUser(email);
+                User user = DataBaseService.getInstance().getUser(storedUser.email);
                 return new Response(200, user);
             } catch (Exception e) {
 
@@ -55,7 +54,7 @@ public class UserService {
 
     @POST
     @Path("signup/")
-    public Response signup(@FormParam("email") String email, @FormParam("password") String password, @Context HttpServletRequest req) {
+    public Response signup(@FormParam("email") String email, @FormParam("password") String password) {
         try {
             DataBaseService.getInstance().addUser(email, password);
             return new Response(200, null);
@@ -63,6 +62,14 @@ public class UserService {
         catch (Exception e) {
             return new Response(500, null);
         }
+    }
+
+    @POST
+    @Path("logout/")
+    public Response logout(@Context HttpServletRequest req) {
+        HttpSession session = req.getSession(true);
+        session.removeAttribute("user");
+        return new Response(200, null);
     }
 
 }
