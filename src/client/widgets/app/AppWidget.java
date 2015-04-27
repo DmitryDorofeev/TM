@@ -3,7 +3,9 @@ package client.widgets.app;
 import client.UserService;
 import client.events.LoginEvent;
 import client.events.LoginEventHandler;
+import client.widgets.dashboard.DashboardWidget;
 import client.widgets.login.LoginWidget;
+import client.widgets.tasks.TasksWidget;
 import client.widgets.toolbar.ToolbarWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -49,9 +51,8 @@ public class AppWidget extends Composite {
             }
 
             public void onSuccess(Method method, Response resp) {
-                container.clear();
                 if (resp.status == 200) {
-                    container.add(new ToolbarWidget(eventBus, resp.data));
+                    showDashboard(eventBus, resp.data);
                 }
                 else {
                     container.add(new LoginWidget(eventBus));
@@ -61,8 +62,7 @@ public class AppWidget extends Composite {
 
         eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
             public void showApp(LoginEvent event) {
-                container.clear();
-                container.add(new ToolbarWidget(eventBus, event.getUser()));
+                showDashboard(eventBus, event.getUser());
             }
         });
 
@@ -78,5 +78,10 @@ public class AppWidget extends Composite {
             }
         };
         timer.schedule(5000);
+    }
+
+    public void showDashboard(SimpleEventBus eventBus, User user) {
+        container.clear();
+        container.add(new DashboardWidget(eventBus, user));
     }
 }
