@@ -46,10 +46,6 @@ div.hide {
     opacity: 0;
 }
 
-div.visible {
-    display: block;
-}
-
 @keyframes fadeIn {
     0% {
         opacity: 0;

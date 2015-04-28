@@ -49,9 +49,7 @@ public class LoginWidget extends Composite {
         this.eventBus = eventBus;
         initWidget(uiBinder.createAndBindUi(this));
         loginEmailField.getElement().setAttribute("placeholder", "email");
-        signupEmailField.getElement().setAttribute("placeholder", "email");
         loginPasswordField.getElement().setAttribute("placeholder", "password");
-        signupPasswordField.getElement().setAttribute("placeholder", "password");
         loginButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 LoginWidget.this.login(loginEmailField.getText(), loginPasswordField.getText());

@@ -1,6 +1,9 @@
 package server.rest;
 
 import shared.Response;
+import shared.ResponseTask;
+import shared.ResponseTasks;
+import shared.Task;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,7 +16,14 @@ import javax.ws.rs.Path;
 public class TasksService {
     @GET
     @Path("/")
-    public Response getAll() {
-        return null;
+    public ResponseTasks getAll() {
+        try {
+            Thread.sleep(2000);
+        }
+        catch (Exception e) {
+
+        }
+        Task[] tasks = {new Task("hi"), new Task("azz")};
+        return new ResponseTasks(200, tasks);
     }
 }

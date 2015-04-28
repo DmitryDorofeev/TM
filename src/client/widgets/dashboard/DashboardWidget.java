@@ -6,10 +6,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import shared.User;
 
 /**
@@ -18,7 +15,7 @@ import shared.User;
 public class DashboardWidget extends Composite {
 
     @UiField
-    SimplePanel panel;
+    FlowPanel panel;
 
     interface DashboardUiBinder extends UiBinder<Widget, DashboardWidget>{
     }
