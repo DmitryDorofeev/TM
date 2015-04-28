@@ -13,11 +13,8 @@
     padding: 4px;
 }
 
-.hidden {
-    display: none;
-}
-
 .content {
+    padding: 10px 20px;
 }
 
 .preloader {
