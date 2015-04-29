@@ -43,14 +43,14 @@ public class AppWidget extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
         UserService userService = GWT.create(UserService.class);
 
-        userService.getUser(new MethodCallback<Response>() {
+        userService.getUser(new MethodCallback<Response<User>>() {
             public void onFailure(Method method, Throwable throwable) {
                 container.clear();
                 container.add(new LoginWidget(eventBus));
                 showMessage(throwable.getMessage());
             }
 
-            public void onSuccess(Method method, Response resp) {
+            public void onSuccess(Method method, Response<User> resp) {
                 if (resp.status == 200) {
                     showDashboard(eventBus, resp.data);
                 }

@@ -8,6 +8,7 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
@@ -31,6 +32,12 @@ public class ToolbarWidget extends Composite {
     DivElement userActionsList;
     @UiField
     HTMLPanel logout;
+    @UiField
+    ToolbarStyles dynamic;
+
+    interface ToolbarStyles extends CssResource {
+        String visible();
+    }
 
     interface ToolbarUiBinder extends UiBinder<Widget, ToolbarWidget> {
     }
@@ -43,7 +50,7 @@ public class ToolbarWidget extends Composite {
         emailField.sinkEvents(Event.ONCLICK);
         emailField.addHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                userActionsList.toggleClassName("visible");
+                userActionsList.toggleClassName(dynamic.visible());
             }
         }, ClickEvent.getType());
         logout.sinkEvents(Event.ONCLICK);
@@ -56,12 +63,12 @@ public class ToolbarWidget extends Composite {
 
     public void logout() {
         UserService userService = GWT.create(UserService.class);
-        userService.logout(new MethodCallback<Response>() {
+        userService.logout(new MethodCallback<Response<User>>() {
             public void onFailure(Method method, Throwable throwable) {
 
             }
 
-            public void onSuccess(Method method, Response response) {
+            public void onSuccess(Method method, Response<User> response) {
                 if (response.status == 200) {
                     Window.Location.reload();
                 }

@@ -1,6 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style src="styles/style.css"/>
+    <ui:style src="styles/style.css" field="style"/>
+    <ui:style src="styles/dynamic.css" field="dynamic" type="client.widgets.toolbar.ToolbarWidget.ToolbarStyles"/>
     <g:HTMLPanel>
         <div class="{style.toolbar}">
             <div class="{style.toolbar__left}">

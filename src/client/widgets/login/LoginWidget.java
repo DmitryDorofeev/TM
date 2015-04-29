@@ -64,14 +64,14 @@ public class LoginWidget extends Composite {
 
     public void login(String email, String password) {
         UserService userService = GWT.create(UserService.class);
-        userService.login(email, password, new MethodCallback<Response>() {
+        userService.login(email, password, new MethodCallback<Response<User>>() {
             public void onFailure(Method method, Throwable throwable) {
                 error.setText(throwable.getMessage());
             }
 
             public void onSuccess(Method method, Response resp) {
                 if (resp.status == 200) {
-                    User user = resp.data;
+                    User user = (User) resp.data;
                     eventBus.fireEvent(new LoginEvent(user));
                 } else {
                     error.setText("Неправильный логин/пароль");
@@ -82,7 +82,7 @@ public class LoginWidget extends Composite {
 
     public void signup(String email, String password) {
         UserService userService = GWT.create(UserService.class);
-        userService.signip(email, password, new MethodCallback<Response>() {
+        userService.signip(email, password, new MethodCallback<Response<User>>() {
             public void onFailure(Method method, Throwable throwable) {
                 error.setText(throwable.getMessage());
             }
