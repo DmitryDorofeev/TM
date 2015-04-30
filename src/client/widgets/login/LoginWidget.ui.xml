@@ -6,38 +6,45 @@
             <div class="{style.panel__row}">
                 <g:Label ui:field="error"></g:Label>
             </div>
-            <g:HTMLPanel ui:field="loginPanel" styleName="{style.subpanel}">
-                <div class="{style.panel__row}">
-                    <div class="{style.panel__title}">
-                        Войти
+            <g:FormPanel ui:field="loginForm" styleName="{style.subpanel}" action="#">
+                <g:HTMLPanel>
+
+                    <div class="{style.panel__row}">
+                        <div class="{style.panel__title}">
+                            Войти
+                        </div>
                     </div>
-                </div>
-                <div class="{style.panel__row}">
-                    <g:TextBox ui:field="loginEmailField"></g:TextBox>
-                </div>
-                <div class="{style.panel__row}">
-                    <g:PasswordTextBox ui:field="loginPasswordField"></g:PasswordTextBox>
-                </div>
-                <div class="{style.panel__row}">
-                    <g:Button ui:field="loginButton">Войти</g:Button>
-                </div>
-            </g:HTMLPanel>
-            <g:HTMLPanel ui:field="signupPanel" styleName="{style.subpanel}">
-                <div class="{style.panel__row}">
-                    <div class="{style.panel__title}">
-                        Зарегистрироваться
+                    <div class="{style.panel__row}">
+                        <g:TextBox ui:field="loginEmailField"></g:TextBox>
                     </div>
-                </div>
-                <div class="{style.panel__row}">
-                    <g:TextBox ui:field="signupEmailField"></g:TextBox>
-                </div>
-                <div class="{style.panel__row}">
-                    <g:PasswordTextBox ui:field="signupPasswordField"></g:PasswordTextBox>
-                </div>
-                <div class="{style.panel__row}">
-                    <g:Button ui:field="signupButton">Зарегистрироваться</g:Button>
-                </div>
-            </g:HTMLPanel>
+                    <div class="{style.panel__row}">
+                        <g:PasswordTextBox ui:field="loginPasswordField"></g:PasswordTextBox>
+                    </div>
+                    <div class="{style.panel__row}">
+                        <g:SubmitButton ui:field="loginButton" addStyleNames="gwt-Button">Войти</g:SubmitButton>
+                    </div>
+
+                </g:HTMLPanel>
+            </g:FormPanel>
+            <g:FormPanel ui:field="signupForm" styleName="{style.subpanel}" action="#">
+                <g:HTMLPanel>
+                    <div class="{style.panel__row}">
+                        <div class="{style.panel__title}">
+                            Зарегистрироваться
+                        </div>
+                    </div>
+                    <div class="{style.panel__row}">
+                        <g:TextBox ui:field="signupEmailField"></g:TextBox>
+                    </div>
+                    <div class="{style.panel__row}">
+                        <g:PasswordTextBox ui:field="signupPasswordField"></g:PasswordTextBox>
+                    </div>
+                    <div class="{style.panel__row}">
+                        <g:SubmitButton ui:field="signupButton" addStyleNames="gwt-Button">Зарегистрироваться</g:SubmitButton>
+                    </div>
+
+                </g:HTMLPanel>
+            </g:FormPanel>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

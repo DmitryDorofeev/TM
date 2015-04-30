@@ -1,6 +1,8 @@
 package client.widgets.tasks;
 
 import client.TasksService;
+import client.events.CloseTaskEvent;
+import client.events.CloseTaskEventHandler;
 import client.widgets.task.TaskWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -51,6 +53,12 @@ public class TasksWidget extends Composite {
                 for (Task task : response.data) {
                     content.add(new TaskWidget(eventBus, task));
                 }
+            }
+        });
+
+        eventBus.addHandler(CloseTaskEvent.TYPE, new CloseTaskEventHandler() {
+            public void close(CloseTaskEvent event) {
+
             }
         });
     }

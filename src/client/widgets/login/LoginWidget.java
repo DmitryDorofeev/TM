@@ -3,10 +3,7 @@ package client.widgets.login;
 import client.UserService;
 import client.events.LoginEvent;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.logging.client.ConsoleLogHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -16,14 +13,15 @@ import org.fusesource.restygwt.client.MethodCallback;
 import shared.Response;
 import shared.User;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Created by dmitry on 02.04.15.
  */
 public class LoginWidget extends Composite {
 
+    @UiField
+    FormPanel loginForm;
+    @UiField
+    FormPanel signupForm;
     @UiField
     TextBox loginEmailField;
     @UiField
@@ -50,13 +48,15 @@ public class LoginWidget extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
         loginEmailField.getElement().setAttribute("placeholder", "email");
         loginPasswordField.getElement().setAttribute("placeholder", "password");
-        loginButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+        loginForm.addSubmitHandler(new FormPanel.SubmitHandler() {
+            public void onSubmit(FormPanel.SubmitEvent event) {
+                event.cancel();
                 LoginWidget.this.login(loginEmailField.getText(), loginPasswordField.getText());
             }
         });
-        signupButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+        signupForm.addSubmitHandler(new FormPanel.SubmitHandler() {
+            public void onSubmit(FormPanel.SubmitEvent event) {
+                event.cancel();
                 LoginWidget.this.signup(signupEmailField.getText(), signupPasswordField.getText());
             }
         });

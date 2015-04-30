@@ -67,3 +67,19 @@ span.fourth {
     50% { transform:scale(0.5); }
     100% { transform:scale(1); }
 }
+
+.add-task {
+    margin: 10px;
+}
+
+.add-task__button {
+    display: inline-block;
+}
+
+.add-task__input {
+    width: 300px;
+    font-size: 18px;
+    padding: 8px;
+    margin: 0 10px;
+    outline: none;
+}
