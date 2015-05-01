@@ -1,9 +1,12 @@
 package server.db;
 
+import shared.Task;
 import shared.User;
 
 import java.security.MessageDigest;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -88,6 +91,7 @@ public class DataBaseService {
         st.setString(2, hashedPassword);
         st.setString(3, salt);
         st.execute();
+        conn.close();
         return true;
     }
 
@@ -100,6 +104,30 @@ public class DataBaseService {
         User user = new User(email);
         user.setPassword(rs.getString("password"));
         user.setSalt(rs.getString("salt"));
+        conn.close();
         return user;
+    }
+
+    public List<Task> getTasksList(User user) throws Exception {
+        Connection conn = DataBaseService.getInstance().connect();
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ?");
+        st.setString(1, user.email);
+        ResultSet rs = st.executeQuery();
+        List<Task> tasksList = new ArrayList<Task>();
+        while (rs.next()) {
+            tasksList.add(new Task(rs.getString("title")));
+        }
+        conn.close();
+        return tasksList;
+    }
+
+    public Task addTask(String title, User user) throws Exception {
+        Connection conn = DataBaseService.getInstance().connect();
+        PreparedStatement st = conn.prepareStatement("INSERT INTO tasks (id, title, email) VALUES (tasks_seq.nextval, ?, ?)");
+        st.setString(1, title);
+        st.setString(2, user.email);
+        st.execute();
+        conn.close();
+        return new Task(title);
     }
 }

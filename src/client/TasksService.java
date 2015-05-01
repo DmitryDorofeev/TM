@@ -3,12 +3,9 @@ package client;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 import shared.Response;
-import shared.ResponseTask;
 import shared.Task;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import java.util.List;
 
 /**
@@ -24,4 +21,8 @@ public interface TasksService extends RestService {
     @GET
     @Path("{id}/")
     void getOne(@PathParam("id") int id, MethodCallback<Response<Task>> callback);
+
+    @POST
+    @Path("add/")
+    void addOne(@FormParam("task") String taskTitle, MethodCallback<Response<Task>> callback);
 }

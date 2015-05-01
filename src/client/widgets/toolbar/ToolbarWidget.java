@@ -27,7 +27,7 @@ public class ToolbarWidget extends Composite {
     @UiField
     Label email;
     @UiField
-    SimplePanel emailField;
+    FlowPanel emailField;
     @UiField
     DivElement userActionsList;
     @UiField

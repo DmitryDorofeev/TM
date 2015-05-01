@@ -10,9 +10,8 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 import shared.Response;
@@ -25,11 +24,18 @@ import java.util.List;
 public class TasksWidget extends Composite {
 
     @UiField
+    FormPanel addForm;
+    @UiField
     DivElement preloader;
     @UiField
     TasksStyle dynamic;
     @UiField
     FlowPanel content;
+    @UiField
+    TextBox taskTitle;
+
+    TasksService tasksService;
+    SimpleEventBus eventBus;
 
     interface TasksStyle extends CssResource {
         String hidden();
@@ -41,9 +47,13 @@ public class TasksWidget extends Composite {
     private static TasksUiBinder uiBinder = GWT.create(TasksUiBinder.class);
 
     public TasksWidget(final SimpleEventBus eventBus) {
+
+        this.eventBus = eventBus;
+
         initWidget(uiBinder.createAndBindUi(this));
-        TasksService tasksService = GWT.create(TasksService.class);
-        tasksService.getAll(new MethodCallback<Response<List<Task>>>() {
+        taskTitle.getElement().setAttribute("placeholder", "Название задачи");
+        this.tasksService = GWT.create(TasksService.class);
+        this.tasksService.getAll(new MethodCallback<Response<List<Task>>>() {
             public void onFailure(Method method, Throwable throwable) {
 
             }
@@ -56,9 +66,30 @@ public class TasksWidget extends Composite {
             }
         });
 
+        addForm.addSubmitHandler(new FormPanel.SubmitHandler() {
+            public void onSubmit(FormPanel.SubmitEvent event) {
+                event.cancel();
+                addTask(taskTitle.getText());
+
+            }
+        });
+
         eventBus.addHandler(CloseTaskEvent.TYPE, new CloseTaskEventHandler() {
             public void close(CloseTaskEvent event) {
 
+            }
+        });
+    }
+
+    public void addTask(String title) {
+        this.tasksService.addOne(title, new MethodCallback<Response<Task>>() {
+            public void onFailure(Method method, Throwable throwable) {
+
+            }
+
+            public void onSuccess(Method method, Response<Task> taskResponse) {
+                content.add(new TaskWidget(eventBus, taskResponse.data));
+                taskTitle.setText("");
             }
         });
     }

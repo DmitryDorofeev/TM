@@ -15,7 +15,12 @@
             </g:HTMLPanel>
         </g:FlowPanel>
         <div class="{style.add-task}">
-            <input type="text" class="{style.add-task__input}"/><g:Button styleName="gwt-Button {style.add-task__button}">Добавить задачу</g:Button>
+            <g:FormPanel ui:field="addForm" action="#">
+                <g:FlowPanel>
+                    <g:TextBox styleName="{style.add-task__input}" ui:field="taskTitle"></g:TextBox>
+                    <g:SubmitButton styleName="gwt-Button {style.add-task__button}">Добавить задачу</g:SubmitButton>
+                </g:FlowPanel>
+            </g:FormPanel>
         </div>
     </g:HTMLPanel>
 

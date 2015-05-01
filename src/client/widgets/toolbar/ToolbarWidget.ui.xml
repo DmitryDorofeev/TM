@@ -8,9 +8,9 @@
                 <div class="{style.title}">Title</div>
             </div>
             <div class="{style.toolbar__right}">
-                <g:SimplePanel styleName="{style.login}" ui:field="emailField">
+                <g:FlowPanel styleName="{style.login}" ui:field="emailField">
                     <g:Label ui:field="email"></g:Label>
-                </g:SimplePanel>
+                </g:FlowPanel>
                 <div class="{style.useractions}" ui:field="userActionsList">
                     <g:HTMLPanel ui:field="logout"><div class="{style.useractions__action}">Выйти</div></g:HTMLPanel>
                 </div>

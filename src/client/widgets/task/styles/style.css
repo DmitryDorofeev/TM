@@ -1,0 +1,43 @@
+.task {
+    border-bottom: 1px solid #ddd;
+    line-height: 45px;
+    padding: 0 10px;
+    width: 300px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.task:hover {
+    background-color: #f7f7f7;
+}
+
+.title {
+    float: left;
+}
+
+.controls {
+    display: none;
+    height: 30px;
+    float: right;
+}
+
+.controls__button {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    background-size: contain;
+    border: none;
+    margin-top: 7px;
+    cursor: pointer;
+    outline: none;
+}
+
+.controls__button_params {
+    background-image: url("/images/params.png");
+    margin-right: 10px;
+}
+
+.controls__button_done {
+    background-image: url("/images/done.png");
+}
