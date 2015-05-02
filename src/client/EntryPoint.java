@@ -19,6 +19,7 @@ public class EntryPoint implements com.google.gwt.core.client.EntryPoint {
 
         SimpleEventBus eventBus = new SimpleEventBus();
 
+        RootPanel.get("preloader").addStyleName("hide");
         RootPanel.get("container").add(new AppWidget(eventBus));
     }
 

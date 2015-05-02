@@ -1,0 +1,27 @@
+.row {
+    clear: left;
+    text-align: center;
+}
+
+.element {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #eee;
+    display: inline-block;
+}
+
+.few {
+    background-color: #2ecc71;
+}
+
+.middle {
+    background-color: #f1c40f;
+}
+
+.many {
+    background-color: #9b59b6;
+}
+
+.slave {
+    background-color: #000;
+}

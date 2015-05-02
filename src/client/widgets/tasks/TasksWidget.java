@@ -1,22 +1,14 @@
 package client.widgets.tasks;
 
 import client.TasksService;
-import client.events.CloseTaskEvent;
-import client.events.CloseTaskEventHandler;
-import client.widgets.task.TaskWidget;
+import client.widgets.day.DayTasksWidget;
+import client.widgets.year.YearTasksWidget;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import org.fusesource.restygwt.client.Method;
-import org.fusesource.restygwt.client.MethodCallback;
-import shared.Response;
-import shared.Task;
-import java.util.List;
 
 /**
  * Created by dmitry on 27.04.15.
@@ -24,15 +16,9 @@ import java.util.List;
 public class TasksWidget extends Composite {
 
     @UiField
-    FormPanel addForm;
-    @UiField
-    DivElement preloader;
-    @UiField
     TasksStyle dynamic;
     @UiField
-    FlowPanel content;
-    @UiField
-    TextBox taskTitle;
+    FlowPanel panel;
 
     TasksService tasksService;
     SimpleEventBus eventBus;
@@ -47,50 +33,12 @@ public class TasksWidget extends Composite {
     private static TasksUiBinder uiBinder = GWT.create(TasksUiBinder.class);
 
     public TasksWidget(final SimpleEventBus eventBus) {
-
-        this.eventBus = eventBus;
-
         initWidget(uiBinder.createAndBindUi(this));
-        taskTitle.getElement().setAttribute("placeholder", "Название задачи");
-        this.tasksService = GWT.create(TasksService.class);
-        this.tasksService.getAll(new MethodCallback<Response<List<Task>>>() {
-            public void onFailure(Method method, Throwable throwable) {
-
-            }
-
-            public void onSuccess(Method method, Response<List<Task>> response) {
-                content.clear();
-                for (Task task : response.data) {
-                    content.add(new TaskWidget(eventBus, task));
-                }
-            }
-        });
-
-        addForm.addSubmitHandler(new FormPanel.SubmitHandler() {
-            public void onSubmit(FormPanel.SubmitEvent event) {
-                event.cancel();
-                addTask(taskTitle.getText());
-
-            }
-        });
-
-        eventBus.addHandler(CloseTaskEvent.TYPE, new CloseTaskEventHandler() {
-            public void close(CloseTaskEvent event) {
-
-            }
-        });
+        this.eventBus = eventBus;
+        panel.add(new YearTasksWidget(eventBus, "Год", "year"));
+        panel.add(new YearTasksWidget(eventBus, "Месяц", "month"));
+        panel.add(new YearTasksWidget(eventBus, "Неделя", "week"));
+        panel.add(new DayTasksWidget(eventBus));
     }
 
-    public void addTask(String title) {
-        this.tasksService.addOne(title, new MethodCallback<Response<Task>>() {
-            public void onFailure(Method method, Throwable throwable) {
-
-            }
-
-            public void onSuccess(Method method, Response<Task> taskResponse) {
-                content.add(new TaskWidget(eventBus, taskResponse.data));
-                taskTitle.setText("");
-            }
-        });
-    }
 }

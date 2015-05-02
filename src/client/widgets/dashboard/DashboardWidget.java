@@ -1,5 +1,6 @@
 package client.widgets.dashboard;
 
+import client.widgets.graph.GraphWidget;
 import client.widgets.tasks.TasksWidget;
 import client.widgets.toolbar.ToolbarWidget;
 import com.google.gwt.core.client.GWT;
@@ -26,5 +27,6 @@ public class DashboardWidget extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
         panel.add(new ToolbarWidget(eventBus, user));
         panel.add(new TasksWidget(eventBus));
+        panel.add(new GraphWidget(eventBus));
     }
 }

@@ -1,6 +1,7 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style field="style" src="styles/style.css"/>
+    <ui:style field="dynamic" src="styles/dynamic.css" type="client.widgets.task.TaskWidget.TaskStyle"/>
     <g:HTMLPanel styleName="{style.task}" ui:field="panel">
         <g:Label ui:field="title" styleName="{style.title}"></g:Label>
         <g:HTMLPanel ui:field="controls" styleName="{style.controls}">

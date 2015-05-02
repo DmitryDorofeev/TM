@@ -1,8 +1,7 @@
 .task {
     border-bottom: 1px solid #ddd;
     line-height: 45px;
-    padding: 0 10px;
-    width: 300px;
+    width: 100%;
     border-radius: 2px;
     overflow: hidden;
 }
@@ -12,6 +11,7 @@
 }
 
 .title {
+    margin-left: 10px;
     float: left;
 }
 
@@ -31,11 +31,11 @@
     margin-top: 7px;
     cursor: pointer;
     outline: none;
+    margin-right: 10px;
 }
 
 .controls__button_params {
     background-image: url("/images/params.png");
-    margin-right: 10px;
 }
 
 .controls__button_done {

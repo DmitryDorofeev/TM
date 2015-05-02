@@ -1,8 +1,9 @@
 package client.events;
 
+import client.widgets.task.TaskWidget;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.user.client.ui.Widget;
 import shared.Task;
-import shared.User;
 
 /**
  * Created by dmitry on 25.04.15.
@@ -11,14 +12,18 @@ public class CloseTaskEvent extends GwtEvent<CloseTaskEventHandler> {
 
     public static Type<CloseTaskEventHandler> TYPE = new Type<CloseTaskEventHandler>();
 
-    private Task task;
+    private TaskWidget widget;
 
-    public CloseTaskEvent(Task task) {
-        this.task = task;
+    public CloseTaskEvent(TaskWidget widget) {
+        this.widget = widget;
     }
 
     public Task getTask() {
-        return this.task;
+        return this.widget.getTask();
+    }
+
+    public Widget getTarget() {
+        return this.widget;
     }
 
     @Override

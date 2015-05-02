@@ -19,10 +19,18 @@ public interface TasksService extends RestService {
     void getAll(MethodCallback<Response<List<Task>>> callback);
 
     @GET
+    @Path("{time}/")
+    void getLongTasks(@PathParam("time") String time, MethodCallback<Response<List<Task>>> callback);
+
+    @GET
     @Path("{id}/")
     void getOne(@PathParam("id") int id, MethodCallback<Response<Task>> callback);
 
     @POST
     @Path("add/")
     void addOne(@FormParam("task") String taskTitle, MethodCallback<Response<Task>> callback);
+
+    @POST
+    @Path("{id}/close")
+    void closeTask(@PathParam("id") int id, MethodCallback<Response<Task>> callback);
 }

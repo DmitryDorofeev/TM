@@ -1,6 +1,6 @@
 .panel {
     width: 90%;
-    margin: 40px 5% 10px 5%;
+    margin: 20px 5%;
     border: 1px solid #ddd;
     border-radius: 3px;
     background-color: #ffffff;
@@ -16,6 +16,7 @@
 
 .content {
     padding: 10px 20px;
+    text-align: center;
 }
 
 .preloader {

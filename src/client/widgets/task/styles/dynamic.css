@@ -1,0 +1,7 @@
+.closed {
+    opacity: .4;
+}
+
+.title_line {
+    text-decoration: line-through;
+}

@@ -1,18 +1,14 @@
 package client.widgets.task;
 
+import client.events.CloseTaskEvent;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import shared.Task;
 
 /**
@@ -26,17 +22,30 @@ public class TaskWidget extends Composite {
     HTMLPanel panel;
     @UiField
     HTMLPanel controls;
+    @UiField
+    Button doneButton;
+    @UiField
+    TaskStyle dynamic;
+    Task task;
 
+    interface TaskStyle extends CssResource {
+        String closed();
+        String title_line();
+    }
 
     interface TaskUiBinder extends UiBinder<Widget, TaskWidget> {
     }
 
     private static TaskUiBinder uiBinder = GWT.create(TaskUiBinder.class);
 
-    public TaskWidget(SimpleEventBus eventBus, Task task) {
+    public TaskWidget(final SimpleEventBus eventBus, final Task task) {
         initWidget(uiBinder.createAndBindUi(this));
         title.setText(task.title);
-
+        this.task = task;
+        if (!task.opened) {
+            panel.addStyleName(dynamic.closed());
+            title.addStyleName(dynamic.title_line());
+        }
         panel.sinkEvents(Event.ONMOUSEOVER);
         panel.sinkEvents(Event.ONMOUSEOUT);
         panel.addHandler(new MouseOverHandler() {
@@ -55,5 +64,21 @@ public class TaskWidget extends Composite {
 
         }, MouseOutEvent.getType());
 
+        doneButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                if (task.opened) {
+                    panel.addStyleName(dynamic.closed());
+                    title.addStyleName(dynamic.title_line());
+                    task.opened = false;
+                    eventBus.fireEvent(new CloseTaskEvent(TaskWidget.this));
+                    doneButton.addStyleName("hide");
+                }
+            }
+        });
+
+    }
+
+    public Task getTask() {
+        return this.task;
     }
 }

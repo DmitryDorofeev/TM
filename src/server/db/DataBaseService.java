@@ -110,12 +110,28 @@ public class DataBaseService {
 
     public List<Task> getTasksList(User user) throws Exception {
         Connection conn = DataBaseService.getInstance().connect();
-        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ?");
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ? and timespan = 'day'");
         st.setString(1, user.email);
         ResultSet rs = st.executeQuery();
         List<Task> tasksList = new ArrayList<Task>();
         while (rs.next()) {
-            tasksList.add(new Task(rs.getString("title")));
+            Task task = new Task(rs.getString("title"), rs.getInt("id"), rs.getBoolean("opened"));
+            tasksList.add(task);
+        }
+        conn.close();
+        return tasksList;
+    }
+
+    public List<Task> getLongTasksList(User user, String time) throws Exception {
+        Connection conn = DataBaseService.getInstance().connect();
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ? and timespan = ?");
+        st.setString(1, user.email);
+        st.setString(2, time);
+        ResultSet rs = st.executeQuery();
+        List<Task> tasksList = new ArrayList<Task>();
+        while (rs.next()) {
+            Task task = new Task(rs.getString("title"), rs.getInt("id"), rs.getBoolean("opened"));
+            tasksList.add(task);
         }
         conn.close();
         return tasksList;
@@ -123,11 +139,25 @@ public class DataBaseService {
 
     public Task addTask(String title, User user) throws Exception {
         Connection conn = DataBaseService.getInstance().connect();
-        PreparedStatement st = conn.prepareStatement("INSERT INTO tasks (id, title, email) VALUES (tasks_seq.nextval, ?, ?)");
+        PreparedStatement st = conn.prepareStatement("INSERT INTO tasks (id, title, email, timespan, opened) VALUES (tasks_seq.nextval, ?, ?, 'day', 1)");
         st.setString(1, title);
         st.setString(2, user.email);
         st.execute();
+        Statement lastSt = conn.createStatement();
+        ResultSet lastRs = lastSt.executeQuery("SELECT tasks_seq.currval FROM DUAL");
+        int id = 0;
+        if (lastRs.next()) {
+            id = lastRs.getInt(1);
+        }
         conn.close();
-        return new Task(title);
+        return new Task(title, id);
+    }
+
+    public void closeTask(int taskId) throws Exception {
+        Connection conn = DataBaseService.getInstance().connect();
+        PreparedStatement st = conn.prepareStatement("UPDATE tasks SET opened = 0 WHERE id = ?");
+        st.setInt(1, taskId);
+        st.execute();
+        conn.close();
     }
 }

@@ -4,24 +4,7 @@
     <ui:style field="dynamic" src="styles/dynamic.css" type="client.widgets.tasks.TasksWidget.TasksStyle"/>
     <g:HTMLPanel styleName="{style.panel}">
         <div class="{style.title}">Задачи</div>
-        <g:FlowPanel styleName="{style.content}" ui:field="content">
-            <g:HTMLPanel>
-                <div class="{style.preloader}" ui:field="preloader">
-                    <span class="{style.first}"></span>
-                    <span class="{style.second}"></span>
-                    <span class="{style.third}"></span>
-                    <span class="{style.fourth}"></span>
-                </div>
-            </g:HTMLPanel>
-        </g:FlowPanel>
-        <div class="{style.add-task}">
-            <g:FormPanel ui:field="addForm" action="#">
-                <g:FlowPanel>
-                    <g:TextBox styleName="{style.add-task__input}" ui:field="taskTitle"></g:TextBox>
-                    <g:SubmitButton styleName="gwt-Button {style.add-task__button}">Добавить задачу</g:SubmitButton>
-                </g:FlowPanel>
-            </g:FormPanel>
-        </div>
+        <g:FlowPanel styleName="{style.content}" ui:field="panel"></g:FlowPanel>
     </g:HTMLPanel>
 
 </ui:UiBinder>
