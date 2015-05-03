@@ -110,12 +110,16 @@ public class DataBaseService {
 
     public List<Task> getTasksList(User user) throws Exception {
         Connection conn = DataBaseService.getInstance().connect();
-        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ? and timespan = 'day'");
+        PreparedStatement pst = conn.prepareStatement("UPDATE tasks SET creation_date = CURRENT_TIMESTAMP WHERE email = ? and timespan = 'day' and to_char(CURRENT_TIMESTAMP,'YYYY-MON-DD') > to_char(creation_date,'YYYY-MON-DD') and opened = 1");
+        pst.setString(1, user.email);
+        pst.execute();
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ? and timespan = 'day' and to_char(CURRENT_TIMESTAMP,'YYYY-MON-DD') = to_char(creation_date,'YYYY-MON-DD')");
         st.setString(1, user.email);
         ResultSet rs = st.executeQuery();
         List<Task> tasksList = new ArrayList<Task>();
         while (rs.next()) {
-            Task task = new Task(rs.getString("title"), rs.getInt("id"), rs.getBoolean("opened"));
+            Timestamp time = rs.getTimestamp("creation_date");
+            Task task = new Task(rs.getString("title"), rs.getInt("id"), rs.getBoolean("opened"), time.getTime());
             tasksList.add(task);
         }
         conn.close();
@@ -155,7 +159,7 @@ public class DataBaseService {
 
     public void closeTask(int taskId) throws Exception {
         Connection conn = DataBaseService.getInstance().connect();
-        PreparedStatement st = conn.prepareStatement("UPDATE tasks SET opened = 0 WHERE id = ?");
+        PreparedStatement st = conn.prepareStatement("UPDATE tasks SET opened = 0, update_date = CURRENT_TIMESTAMP WHERE id = ?");
         st.setInt(1, taskId);
         st.execute();
         conn.close();

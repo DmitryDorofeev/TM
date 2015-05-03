@@ -13,6 +13,7 @@ public class Task implements Serializable {
     public int id;
     public String title;
     public Boolean opened;
+    public Long time;
 
     @JsonCreator
     public Task(@JsonProperty("title") String title) {
@@ -30,6 +31,13 @@ public class Task implements Serializable {
         this.title = title;
         this.opened = opened;
         this.id = id;
+    }
+
+    public Task(@JsonProperty("title") String title, @JsonProperty("id") int id, @JsonProperty("opened") boolean opened, @JsonProperty("time") Long time) {
+        this.title = title;
+        this.opened = opened;
+        this.id = id;
+        this.time = time;
     }
 
     public Task() {
