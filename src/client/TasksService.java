@@ -2,11 +2,13 @@ package client;
 
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
+import shared.Days;
 import shared.Response;
 import shared.Task;
 
 import javax.ws.rs.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dmitry on 27.04.15.
@@ -17,6 +19,10 @@ public interface TasksService extends RestService {
 
     @GET
     void getAll(MethodCallback<Response<List<Task>>> callback);
+
+    @GET
+    @Path("year/{year}/")
+    void getYearTasks(@PathParam("year") String year, MethodCallback<Response<Days>> callback);
 
     @GET
     @Path("{time}/")

@@ -25,3 +25,8 @@
 .slave {
     background-color: #000;
 }
+
+.disabled {
+    border-color: transparent;
+    background-color: transparent;
+}

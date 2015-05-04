@@ -3,7 +3,7 @@
     <ui:style field="style" src="styles/style.css"/>
     <ui:style field="dynamic" src="styles/dynamic.css" type="client.widgets.graph.GraphWidget.GraphStyle"/>
     <g:HTMLPanel styleName="{style.panel}">
-        <div class="{style.title}">Граф задач</div>
+        <div class="{style.title}">Граф задач <g:Label ui:field="year"></g:Label></div>
         <g:FlowPanel styleName="{style.content}" ui:field="panel">
 
         </g:FlowPanel>

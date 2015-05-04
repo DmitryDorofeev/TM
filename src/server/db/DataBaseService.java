@@ -5,10 +5,7 @@ import shared.User;
 
 import java.security.MessageDigest;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by dmitry on 06.04.15.
@@ -70,7 +67,7 @@ public class DataBaseService {
     }
 
     public String generateSalt() {
-        char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        char[] chars = "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray();
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
@@ -110,10 +107,10 @@ public class DataBaseService {
 
     public List<Task> getTasksList(User user) throws Exception {
         Connection conn = DataBaseService.getInstance().connect();
-        PreparedStatement pst = conn.prepareStatement("UPDATE tasks SET creation_date = CURRENT_TIMESTAMP WHERE email = ? and timespan = 'day' and to_char(CURRENT_TIMESTAMP,'YYYY-MON-DD') > to_char(creation_date,'YYYY-MON-DD') and opened = 1");
+        PreparedStatement pst = conn.prepareStatement("UPDATE tasks SET creation_date = CURRENT_TIMESTAMP WHERE email = ? and timespan = 'day' and to_char(CURRENT_TIMESTAMP,'YYYY-MM-DD') > to_char(creation_date,'YYYY-MM-DD') and opened = 1");
         pst.setString(1, user.email);
         pst.execute();
-        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ? and timespan = 'day' and to_char(CURRENT_TIMESTAMP,'YYYY-MON-DD') = to_char(creation_date,'YYYY-MON-DD')");
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM tasks WHERE email = ? and timespan = 'day' and to_char(CURRENT_TIMESTAMP,'YYYY-MM-DD') = to_char(creation_date,'YYYY-MM-DD')");
         st.setString(1, user.email);
         ResultSet rs = st.executeQuery();
         List<Task> tasksList = new ArrayList<Task>();
@@ -163,5 +160,19 @@ public class DataBaseService {
         st.setInt(1, taskId);
         st.execute();
         conn.close();
+    }
+
+    public Map<String, Integer> getTasksByYear(User user, String year) throws Exception {
+        Connection conn = DataBaseService.getInstance().connect();
+        PreparedStatement st = conn.prepareStatement("SELECT COUNT(update_date) as tasks_count, to_char(MIN(update_date), 'YYYY-MM-DD') as ud FROM tasks WHERE email = ? and EXTRACT(YEAR FROM update_date) = ? GROUP BY EXTRACT(DAY FROM update_date)");
+        st.setString(1, user.email);
+        st.setString(2, year);
+        ResultSet rs = st.executeQuery();
+        Map<String, Integer> tasksMap = new HashMap<String, Integer>();
+        while (rs.next()) {
+            tasksMap.put(rs.getString("ud"), rs.getInt("tasks_count"));
+        }
+        conn.close();
+        return tasksMap;
     }
 }
