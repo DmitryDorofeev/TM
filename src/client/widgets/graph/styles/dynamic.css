@@ -8,6 +8,11 @@
     height: 20px;
     border: 1px solid #eee;
     display: inline-block;
+    cursor: pointer;
+}
+
+.active {
+    border: 1px solid #666;
 }
 
 .few {

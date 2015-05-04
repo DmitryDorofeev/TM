@@ -5,6 +5,7 @@
     border-radius: 3px;
     background-color: #ffffff;
     overflow: hidden;
+    position: relative;
 }
 
 .title {
@@ -86,4 +87,36 @@ span.fourth {
     padding: 8px;
     margin: 1px 10px;
     outline: none;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 40px;
+    background-color: rgba(100,100,100,.8);
+    border-radius: 3px;
+    text-align: center;
+    padding: 10px 0;
+    color: #ffffff;
+}
+
+.popup__tasks {
+    display: inline-block;
+}
+
+.popup__count {
+    display: inline-block;
+}
+
+.popup__date {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.year {
+    display: inline-block;
+    margin-left: 10px;
 }

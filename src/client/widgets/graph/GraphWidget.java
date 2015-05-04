@@ -2,11 +2,16 @@ package client.widgets.graph;
 
 import client.TasksService;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 import org.fusesource.restygwt.client.Method;
@@ -14,7 +19,6 @@ import org.fusesource.restygwt.client.MethodCallback;
 import shared.Days;
 import shared.Response;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Created by dmitry on 27.04.15.
@@ -27,6 +31,12 @@ public class GraphWidget extends Composite {
     GraphStyle dynamic;
     @UiField
     Label year;
+    @UiField
+    HTMLPanel popup;
+    @UiField
+    Label popupDate;
+    @UiField
+    Label popupTasks;
 
     TasksService tasksService;
     SimpleEventBus eventBus;
@@ -39,6 +49,7 @@ public class GraphWidget extends Composite {
         String few();
         String slave();
         String disabled();
+        String active();
     }
 
     interface GraphUiBinder extends UiBinder<Widget, GraphWidget> {
@@ -83,27 +94,51 @@ public class GraphWidget extends Composite {
 
 
                         Date currentDate = CalendarUtil.copyDate(januaryFirst);
-                        CalendarUtil.addDaysToDate(currentDate, 7*day + i - dayOfWeek + 1);
+                        CalendarUtil.addDaysToDate(currentDate, 7 * day + i - dayOfWeek + 1);
                         HTMLPanel div = new HTMLPanel("");
                         div.addStyleName(dynamic.element());
-                        div.getElement().setAttribute("data-date", currentDate.toString());
+                        DateTimeFormat displayFormat = DateTimeFormat.getFormat("dd.MM.yyyy");
+
+                        String key = dateFormat.format(currentDate);
+
+                        div.getElement().setAttribute("data-date", displayFormat.format(currentDate));
+                        div.getElement().setAttribute("data-tasks", resp.data.days.containsKey(key) ? resp.data.days.get(key).toString() : "0");
+
+
+
                         if (day == 0 && i < dayOfWeek - 1) {
                             div.addStyleName(dynamic.disabled());
                         }
                         if (day == 52 && i > lastDayOfWeek - 1) {
                             div.addStyleName(dynamic.disabled());
                         }
-                        if (resp.data.days.containsKey(dateFormat.format(currentDate))) {
-                            if (resp.data.days.get(dateFormat.format(currentDate)) > 10) {
+                        if (resp.data.days.containsKey(key)) {
+                            if (resp.data.days.get(key) > 10) {
                                 div.addStyleName(dynamic.many());
                             }
-                            if (resp.data.days.get(dateFormat.format(currentDate)) > 5) {
+                            if (resp.data.days.get(key) > 5) {
                                 div.addStyleName(dynamic.middle());
                             }
-                            if (resp.data.days.get(dateFormat.format(currentDate)) > 1) {
+                            if (resp.data.days.get(key) > 1) {
                                 div.addStyleName(dynamic.few());
                             }
                         }
+                        div.sinkEvents(Event.ONMOUSEOVER);
+                        div.sinkEvents(Event.ONMOUSEOUT);
+                        div.addHandler(new MouseOverHandler() {
+                            public void onMouseOver(MouseOverEvent event) {
+                                popupDate.setText(event.getRelativeElement().getAttribute("data-date"));
+                                popupTasks.setText(event.getRelativeElement().getAttribute("data-tasks"));
+                                popup.getElement().setAttribute("style", "display: block; left: " + (event.getRelativeX(panel.getElement()) - 75) + "; top: " + (event.getRelativeY(panel.getElement()) - 20));
+                                event.getRelativeElement().addClassName(dynamic.active());
+                            }
+                        }, MouseOverEvent.getType());
+                        div.addHandler(new MouseOutHandler() {
+                            public void onMouseOut(MouseOutEvent event) {
+                                popup.getElement().removeAttribute("style");
+                                event.getRelativeElement().removeClassName(dynamic.active());
+                            }
+                        }, MouseOutEvent.getType());
                         row.add(div);
                     }
                     panel.add(row);

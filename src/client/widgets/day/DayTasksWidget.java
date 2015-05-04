@@ -77,8 +77,9 @@ public class DayTasksWidget extends Composite {
         addForm.addSubmitHandler(new FormPanel.SubmitHandler() {
             public void onSubmit(FormPanel.SubmitEvent event) {
                 event.cancel();
-                addTask(taskTitle.getText());
-
+                if (taskTitle.getText() != "") {
+                    addTask(taskTitle.getText());
+                }
             }
         });
 

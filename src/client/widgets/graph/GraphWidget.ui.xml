@@ -3,10 +3,15 @@
     <ui:style field="style" src="styles/style.css"/>
     <ui:style field="dynamic" src="styles/dynamic.css" type="client.widgets.graph.GraphWidget.GraphStyle"/>
     <g:HTMLPanel styleName="{style.panel}">
-        <div class="{style.title}">Граф задач <g:Label ui:field="year"></g:Label></div>
+        <div class="{style.title}">Граф задач <g:Label ui:field="year" styleName="{style.year}"></g:Label></div>
         <g:FlowPanel styleName="{style.content}" ui:field="panel">
 
         </g:FlowPanel>
+        <g:HTMLPanel ui:field="popup" styleName="{style.popup}">
+            <g:Label ui:field="popupDate" styleName="{style.popup__date}"></g:Label>
+            <div class="{style.popup__tasks}">Задач закрыто: </div>
+            <g:Label ui:field="popupTasks" styleName="{style.popup__count}"></g:Label>
+        </g:HTMLPanel>
     </g:HTMLPanel>
 
 </ui:UiBinder>
