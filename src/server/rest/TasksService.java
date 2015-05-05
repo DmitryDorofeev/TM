@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -88,6 +86,18 @@ public class TasksService {
         }
         catch (Exception e) {
             return new Response<Days>(400, e.getMessage());
+        }
+    }
+
+    @POST
+    @Path("{id}/update")
+    public Response<Boolean> updateTitle(@PathParam("id") int id, @FormParam("title") String title) {
+        try {
+            DataBaseService.getInstance().updateTitle(id, title);
+            return new Response<Boolean>(200, true);
+        }
+        catch (Exception e) {
+            return new Response<Boolean>(400, e.getMessage());
         }
     }
 }

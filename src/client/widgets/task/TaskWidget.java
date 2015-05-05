@@ -2,6 +2,8 @@ package client.widgets.task;
 
 import client.events.CloseTaskEvent;
 import client.events.OpenSettingsEvent;
+import client.events.UpdateTaskEvent;
+import client.events.UpdateTaskEventHandler;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -82,6 +84,14 @@ public class TaskWidget extends Composite {
         paramsButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 eventBus.fireEvent(new OpenSettingsEvent(task));
+            }
+        });
+
+        eventBus.addHandler(UpdateTaskEvent.TYPE, new UpdateTaskEventHandler() {
+            public void update(UpdateTaskEvent event) {
+                if (event.getId() == task.id) {
+                    title.setText(event.getTitle());
+                }
             }
         });
 

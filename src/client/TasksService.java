@@ -39,4 +39,8 @@ public interface TasksService extends RestService {
     @POST
     @Path("{id}/close")
     void closeTask(@PathParam("id") int id, MethodCallback<Response<Task>> callback);
+
+    @POST
+    @Path("{id}/update")
+    void updateTitle(@PathParam("id") int id, @FormParam("title") String title, MethodCallback<Response<Boolean>> callback);
 }

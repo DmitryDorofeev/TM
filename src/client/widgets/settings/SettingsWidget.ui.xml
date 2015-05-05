@@ -2,17 +2,22 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style src="styles/style.css"/>
     <ui:style field="dynamic" src="styles/dynamic.css" type="client.widgets.settings.SettingsWidget.SettingsStyles"/>
-    <g:HTMLPanel styleName="{style.layer}" ui:field="panel">
-        <div class="{style.wrapper}">
+    <g:HTMLPanel ui:field="panel" styleName="{style.root}">
+        <g:HTMLPanel styleName="{style.layer}" ui:field="layer"></g:HTMLPanel>
             <div class="{style.panel}">
-                <g:Label ui:field="title" styleName="{style.title}"></g:Label>
+                <div class="{style.title}" ui:field="staticTitle">
+                    <g:Label ui:field="title" styleName="{style.title__text}"></g:Label>
+                    <g:Button styleName="{style.edit}" ui:field="editButton"></g:Button>
+                </div>
+                <div class="{style.title} {dynamic.hide}" ui:field="editTitle">
+                    <g:TextBox ui:field="titleBox" addStyleNames="{style.input}"></g:TextBox>
+                    <g:Button ui:field="okButton" styleName="{style.ok}"></g:Button>
+                </div>
                 <div class="{style.done}">
-                    <div class="{style.done__img}"></div>
+                    <div class="{style.done__img}" ui:field="image"></div>
                     <div class="{style.done__text}" ui:field="closed">Выполнено</div>
                     <div class="{style.done__text}" ui:field="opened">Задача открыта</div>
                 </div>
             </div>
-        </div>
     </g:HTMLPanel>
-
 </ui:UiBinder>

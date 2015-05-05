@@ -5,3 +5,11 @@
 .show_inline {
     display: inline-block;
 }
+
+.semitransparent {
+    opacity: .1;
+}
+
+.hide {
+    display: none;
+}

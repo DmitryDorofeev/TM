@@ -175,4 +175,13 @@ public class DataBaseService {
         conn.close();
         return tasksMap;
     }
+
+    public boolean updateTitle(int taskId, String title) throws Exception {
+        Connection conn = DataBaseService.getInstance().connect();
+        PreparedStatement st = conn.prepareStatement("UPDATE tasks SET title = ? WHERE id = ?");
+        st.setString(1, title);
+        st.setInt(2, taskId);
+        st.execute();
+        return true;
+    }
 }
