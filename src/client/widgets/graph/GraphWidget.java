@@ -116,10 +116,10 @@ public class GraphWidget extends Composite {
                             if (resp.data.days.get(key) > 10) {
                                 div.addStyleName(dynamic.many());
                             }
-                            if (resp.data.days.get(key) > 5) {
+                            else if (resp.data.days.get(key) > 5) {
                                 div.addStyleName(dynamic.middle());
                             }
-                            if (resp.data.days.get(key) > 1) {
+                            else if (resp.data.days.get(key) > 0) {
                                 div.addStyleName(dynamic.few());
                             }
                         }

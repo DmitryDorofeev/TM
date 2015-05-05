@@ -1,6 +1,7 @@
 package client.widgets.task;
 
 import client.events.CloseTaskEvent;
+import client.events.OpenSettingsEvent;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.SimpleEventBus;
@@ -24,6 +25,8 @@ public class TaskWidget extends Composite {
     HTMLPanel controls;
     @UiField
     Button doneButton;
+    @UiField
+    Button paramsButton;
     @UiField
     TaskStyle dynamic;
     Task task;
@@ -73,6 +76,12 @@ public class TaskWidget extends Composite {
                     eventBus.fireEvent(new CloseTaskEvent(TaskWidget.this));
                     doneButton.addStyleName("hide");
                 }
+            }
+        });
+
+        paramsButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                eventBus.fireEvent(new OpenSettingsEvent(task));
             }
         });
 

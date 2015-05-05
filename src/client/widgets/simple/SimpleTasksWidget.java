@@ -1,4 +1,4 @@
-package client.widgets.year;
+package client.widgets.simple;
 
 import client.TasksService;
 import client.events.CloseTaskEvent;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by dmitry on 27.04.15.
  */
-public class YearTasksWidget extends Composite {
+public class SimpleTasksWidget extends Composite {
 
     @UiField
     FormPanel addForm;
@@ -42,12 +42,12 @@ public class YearTasksWidget extends Composite {
         String hidden();
     }
 
-    interface TasksUiBinder extends UiBinder<Widget, YearTasksWidget> {
+    interface TasksUiBinder extends UiBinder<Widget, SimpleTasksWidget> {
     }
 
     private static TasksUiBinder uiBinder = GWT.create(TasksUiBinder.class);
 
-    public YearTasksWidget(final SimpleEventBus eventBus, String title, String time) {
+    public SimpleTasksWidget(final SimpleEventBus eventBus, String title, String time) {
         this.eventBus = eventBus;
         initWidget(uiBinder.createAndBindUi(this));
         this.title.setText(title);

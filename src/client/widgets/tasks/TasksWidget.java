@@ -2,7 +2,8 @@ package client.widgets.tasks;
 
 import client.TasksService;
 import client.widgets.day.DayTasksWidget;
-import client.widgets.year.YearTasksWidget;
+import client.widgets.settings.SettingsWidget;
+import client.widgets.simple.SimpleTasksWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.resources.client.CssResource;
@@ -35,10 +36,11 @@ public class TasksWidget extends Composite {
     public TasksWidget(final SimpleEventBus eventBus) {
         initWidget(uiBinder.createAndBindUi(this));
         this.eventBus = eventBus;
-        panel.add(new YearTasksWidget(eventBus, "Год", "year"));
-        panel.add(new YearTasksWidget(eventBus, "Месяц", "month"));
-        panel.add(new YearTasksWidget(eventBus, "Неделя", "week"));
+        panel.add(new SimpleTasksWidget(eventBus, "Год", "year"));
+        panel.add(new SimpleTasksWidget(eventBus, "Месяц", "month"));
+        panel.add(new SimpleTasksWidget(eventBus, "Неделя", "week"));
         panel.add(new DayTasksWidget(eventBus));
+        panel.add(new SettingsWidget(eventBus));
     }
 
 }
